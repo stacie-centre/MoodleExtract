@@ -1,2 +1,2 @@
 # MoodleExtract
-Slight enhancement to https://github.com/shcgitpf/moodle-course-backup-file-extractor. Handles renames/extraction of the tar.gz file.
+Slight enhancement to https://github.com/shcgitpf/moodle-course-backup-file-extractor. Since *.mbz files are just a renamed "tar.gz" file, this script handles renaming and extraction, then uses the original project's code to extract the original files from the "mbz" file. You simply need a "destination folder" and your "*.mbz" file ready to go. File dialog will prompt you to pick the "mbz" file, but you will need to edit the first variable line to point to your "destination folder".
