@@ -1,8 +1,31 @@
+#Have yourself an *.mbz file somewhere browse-able and let fly. You'll see a couple of messages you have to acknowledge and a 
+#couple of Windows dialogs to choose a destination folder and file.
+
 #Create a destination folder for your extracted files and put the value of the folder in the following variable. 
 #Have the *.mbz file handy, you'll just run the script and point to it in a filepicker dialog. Sit tight, the "tar extraction" step takes a while. 
 #This works because a .mbz file is really a tar.gz file.
 #### RED ALERT - CHANGE NEXT LINE! ###
-$MyExtractFolder = "U:\ExtractMoodle" 
+#$MyExtractFolder = "U:\ExtractMoodle"
+#
+ 
+
+Add-Type -AssemblyName PresentationCore,PresentationFramework
+
+[System.Windows.MessageBox]::Show('Choose or create a folder as a destination for the extracted Moodle files.')
+
+
+
+Add-Type -AssemblyName System.Windows.Forms
+
+$FolderBrowser = New-Object System.Windows.Forms.FolderBrowserDialog -Property @{
+    SelectedPath = 'c:\'
+    ShowNewFolderButton = $true
+}
+
+[void]$FolderBrowser.ShowDialog()
+$FolderBrowser.SelectedPath
+
+$MyExtractFolder = $FolderBrowser.SelectedPath
 
 
 # PowerShell script to extract the files from a Moodle course backup
@@ -18,7 +41,7 @@ $MyExtractFolder = "U:\ExtractMoodle"
 
 # Note we need to flip / into \ for Windows.
 
-
+[System.Windows.MessageBox]::Show('Now choose the *.mbz file you would like to extract. Sit tight. Extracting takes a while.')
 
 Add-Type -AssemblyName System.Windows.Forms
 $FileBrowser = New-Object System.Windows.Forms.OpenFileDialog -Property @{
@@ -91,4 +114,6 @@ $xml.SelectNodes("files/file") | Where-Object -Property component -eq "mod_folde
         write-host "!!! Source file $sourcefile DOES NOT EXIST."
     }
 
+
 }
+[System.Windows.MessageBox]::Show('All done! Go check ' + $MyExtractFolder + '\export')
